@@ -5,10 +5,12 @@ router.get('/test',(req,res)=>{
 	res.send("Connected from user route test");
 });
 
-router.post('/login',/*give the corresponding controller*/);
-router.post('/sign-up',/*give the corresponding controller*/);
-router.get('/task-list',/*give the corresponding controller*/);
-router.put('/edit-task',/*give the corresponding controller*/);
-router.delete('/delete-task',/*give the corresponding controller*/);
+var UsersController = require("../../controllers/v1/UsersController");
+
+router.post('/login',UsersController.login);
+router.post('/sign-up',UsersController.addUser);
+router.get('/task-list',UsersController.getTaskList);
+router.put('/edit-task',UsersController.editTask);
+router.delete('/delete-task',UsersController.deleteTask);
 
 module.exports = router;
