@@ -19,12 +19,12 @@ mongoose.connect(db,connectionParams)
         console.log('Connected to database ')
     })
     .catch( (err) => {
-        console.error(`Error connecting to the database. \n${err}`);
+        console.err(`err connecting to the database. \n${err}`);
     })
 
 
-var UsersModel=require('../../models/UsersModel');
-var TasksModel=require('../../models/TasksModel');
+var UsersModel=require('../../models/UserSchema');
+var TasksModel=require('../../models/TaskSchema');
 
 
 class UsersController extends AppController{
@@ -37,23 +37,27 @@ class UsersController extends AppController{
 
 			console.log(UsersModel);
 			var newUser = new UsersModel();
-   			newUser._id = req.body.user_id;
+   			//newUser._id = req.body.user_id;
    			newUser.username = req.body.username;
    			newUser.email = req.body.email;
    			newUser.phone_number = req.body.phone_number;
    			newUser.password = req.body.password;
+   			console.log("newUser",newUser);
      		newUser.save(function(err, data){
+     			console.log(data);
+     			console.log(err);
            	res.send("Data inserted");
        
    		});
 		}
-		catch(error){
-			console.log("error:",error);
+		catch(err){
+			console.log("err:",err);
 		}
 	}
 
 	
-	getUserslist(req,res){
+	async getUserslist(req,res){
+
 		try{
 			
 			UsersModel.find(function(err,data){
@@ -63,12 +67,13 @@ class UsersController extends AppController{
 				else{
 					res.send(data);
 				}
-			})  
+			}); 
 
 		}
 		catch(err){
 
 		}
+	
 	}
 
 	addTask(req,res){
@@ -83,8 +88,8 @@ class UsersController extends AppController{
        
    		});
 		}
-		catch(error){
-			console.log("error:",error);
+		catch(err){
+			console.log("err:",err);
 		}	
 
 
@@ -95,7 +100,7 @@ class UsersController extends AppController{
 		try{
 
 		}
-		catch(error){
+		catch(err){
 
 		}
 
@@ -105,16 +110,16 @@ class UsersController extends AppController{
 		try{
 			
 			TasksModel.find(function(err,data){
-				if(error){
-					console.log(error);
+				if(err){
+					console.log(err);
 				}
 				else{
 					res.send(data);
 				}
-			})  
+			}); 
 
 		}
-		catch(error){
+		catch(err){
 
 		}
 
@@ -138,7 +143,7 @@ class UsersController extends AppController{
         		}
 			})
 		}
-		catch(error)
+		catch(err)
 		{
 
 		}
@@ -160,7 +165,7 @@ class UsersController extends AppController{
        				}
     		}); 
 		}
-		catch(error){
+		catch(err){
 
 		}
 
